@@ -4,6 +4,7 @@ import constants
 class Level:
     def __init__(self, info):
         self._backgroundImg = pygame.image.load(info["background"])
+        self._backgroundImg = pygame.transform.scale(self._backgroundImg, info["res"])
 
     def on_init(self):
         pygame.font.init()

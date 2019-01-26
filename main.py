@@ -16,10 +16,10 @@ class App:
 
     def on_init(self):
         pygame.init()
-        self.size = self.weight, self.height = pygame.display.list_modes()[5]
-        self._display_surf = pygame.display.set_mode(self.size,pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.FULLSCREEN)
+        self.res = self.weight, self.height = pygame.display.list_modes()[5]
+        self._display_surf = pygame.display.set_mode(self.res,pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.FULLSCREEN)
         self._running = True
-        self._loader = Loader()
+        self._loader = Loader(self.res)
         self._level, self._player = self._loader.load("resources/level0.json")
         self._level.on_init()
         self._player.on_init()
