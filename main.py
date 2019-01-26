@@ -1,5 +1,5 @@
 import pygame
-
+from level import Level
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -16,10 +16,12 @@ class App:
         self._display_surf = pygame.display.set_mode(self.size,pygame.HWSURFACE | pygame.DOUBLEBUF)
         self._running = True
         pygame.time.set_timer(pygame.USEREVENT+1, 1000/FPS)
+        self._level = Level()
+        self._level.on_init()
 
     def on_event(self, event):
 		if event.type == pygame.USEREVENT+1:
-			self.on_loop()
+			# self.on_loop()
 			self.on_render()
 		if event.type == pygame.QUIT:
 			self._running = False
@@ -30,12 +32,14 @@ class App:
 			# elif keys[pygame.K_s]:
 			# 	pygame.mixer.init()
 			# 	pygame.mixer.music.load("/Users/Cutie/Movies/backgroundmusic.mp3")
-	
-    def on_loop(self):
-        self._display_surf.fill(BLACK)
+
 
     def on_render(self):
+        self._display_surf.fill(BLACK)
+        self._level.on_render(self._display_surf)
+
         pygame.display.flip()
+
 
     def on_cleanup(self):
         pygame.quit()
@@ -52,4 +56,3 @@ class App:
 if __name__ == "__main__":
 	theApp = App()
 	theApp.on_execute()
-	
