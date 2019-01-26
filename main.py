@@ -1,5 +1,5 @@
 import pygame
-from level import Level
+from src.level import Level
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -21,7 +21,7 @@ class App:
 
     def on_event(self, event):
 		if event.type == pygame.USEREVENT+1:
-			# self.on_loop()
+			self.on_loop()
 			self.on_render()
 		if event.type == pygame.QUIT:
 			self._running = False
@@ -37,9 +37,10 @@ class App:
     def on_render(self):
         self._display_surf.fill(BLACK)
         self._level.on_render(self._display_surf)
-
         pygame.display.flip()
 
+    def on_loop(self):
+        self._level.on_loop()
 
     def on_cleanup(self):
         pygame.quit()

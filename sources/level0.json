@@ -1,0 +1,9 @@
+{
+  "level":{
+    "background" : "sources/background.png"
+  },
+  "player":{
+    "squares": 4,
+    "trianges" : 2
+  }
+}
