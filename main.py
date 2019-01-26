@@ -1,10 +1,12 @@
 import pygame
-
+from NextButton import NextButton
 
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 FPS = 30
-bg = pygame.image.load("homes_pics/dog_house.png")
+bg = pygame.image.load("homes_pics/birds_doodles.jpg")
+NEXTBUTTON_X=0
+NEXTBUTTON_Y=0
 
 class App:
     def __init__(self):
@@ -16,26 +18,35 @@ class App:
         self.size = self.weight, self.height = 640, 400
         self._display_surf = pygame.display.set_mode(self.size,pygame.HWSURFACE | pygame.DOUBLEBUF)
         self._running = True
+        self.nextButton = NextButton(NEXTBUTTON_X, NEXTBUTTON_Y, 50)
         pygame.time.set_timer(pygame.USEREVENT+1, 1000/FPS)
 
     def on_event(self, event):
-		if event.type == pygame.USEREVENT+1:
-			self.on_loop()
-			self.on_render()
-		if event.type == pygame.QUIT:
-			self._running = False
-		if event.type == pygame.KEYDOWN:
-			keys = pygame.key.get_pressed()
-			if keys[pygame.K_ESCAPE]:
-				self._running = False
+        global bg
+
+        self.nextButton.on_event(event)
+        if event.type == pygame.USEREVENT+2:
+            #print "here"
+            bg = pygame.image.load("homes_pics/dog_house.png")
+        if event.type == pygame.USEREVENT+1:
+            self.on_loop()
+            self.on_render()
+        if event.type == pygame.QUIT:
+            self._running = False
+        if event.type == pygame.KEYDOWN:
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_ESCAPE]:
+                self._running = False
 			# elif keys[pygame.K_s]:
 			# 	pygame.mixer.init()
 			# 	pygame.mixer.music.load("/Users/Cutie/Movies/backgroundmusic.mp3")
 
     def on_loop(self):
-        self._display_surf.blit(bg, (0,0))
+        pass
 
     def on_render(self):
+        self._display_surf.blit(bg, (0,0))
+        self.nextButton.on_render(self._display_surf)
         pygame.display.flip()
 
     def on_cleanup(self):
