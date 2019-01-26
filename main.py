@@ -1,12 +1,14 @@
 import pygame
 from NextButton import NextButton
 
+from src.level import Level
+from src.loader import Loader
+from src.player import Player
+
+
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 FPS = 30
-bg = pygame.image.load("homes_pics/birds_doodles.jpg")
-NEXTBUTTON_X=0
-NEXTBUTTON_Y=0
 
 class App:
     def __init__(self):
@@ -15,39 +17,37 @@ class App:
 
     def on_init(self):
         pygame.init()
-        self.size = self.weight, self.height = 640, 400
-        self._display_surf = pygame.display.set_mode(self.size,pygame.HWSURFACE | pygame.DOUBLEBUF)
+        self.res = self.weight, self.height = pygame.display.list_modes()[5]
+        self._display_surf = pygame.display.set_mode(self.res,pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.FULLSCREEN)
         self._running = True
-        self.nextButton = NextButton(NEXTBUTTON_X, NEXTBUTTON_Y, 50)
-        pygame.time.set_timer(pygame.USEREVENT+1, 1000/FPS)
+        self._loader = Loader(self.res)
+        self._level, self._player = self._loader.load("resources/level0.json")
+        self._level.on_init()
+        self._player.on_init()
 
     def on_event(self, event):
-        global bg
-
-        self.nextButton.on_event(event)
+        self._player.on_event(event)
         if event.type == pygame.USEREVENT+2:
-            #print "here"
-            bg = pygame.image.load("homes_pics/dog_house.png")
-        if event.type == pygame.USEREVENT+1:
-            self.on_loop()
-            self.on_render()
+            self._level, self._player = self._loader.load("resources/level0.json")
         if event.type == pygame.QUIT:
-            self._running = False
+			self._running = False
         if event.type == pygame.KEYDOWN:
-            keys = pygame.key.get_pressed()
-            if keys[pygame.K_ESCAPE]:
-                self._running = False
+			keys = pygame.key.get_pressed()
+			if keys[pygame.K_ESCAPE]:
+				self._running = False
 			# elif keys[pygame.K_s]:
 			# 	pygame.mixer.init()
 			# 	pygame.mixer.music.load("/Users/Cutie/Movies/backgroundmusic.mp3")
 
-    def on_loop(self):
-        pass
-
     def on_render(self):
-        self._display_surf.blit(bg, (0,0))
-        self.nextButton.on_render(self._display_surf)
+        self._display_surf.fill(BLACK)
+        self._level.on_render(self._display_surf)
+        self._player.on_render(self._display_surf)
         pygame.display.flip()
+
+    # def on_loop(self):
+    #     self._player.on_loop()
+    #     self._level.on_loop()
 
     def on_cleanup(self):
         pygame.quit()
@@ -58,7 +58,7 @@ class App:
         while (self._running):
             for event in pygame.event.get():
                 self.on_event(event)
-
+            self.on_render()
         self.on_cleanup()
 
 if __name__ == "__main__":
