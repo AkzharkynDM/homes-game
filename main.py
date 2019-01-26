@@ -1,6 +1,6 @@
 import pygame
 from src.level import Level
-
+from src.loader import Loader
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 FPS = 30
@@ -16,7 +16,8 @@ class App:
         self._display_surf = pygame.display.set_mode(self.size,pygame.HWSURFACE | pygame.DOUBLEBUF)
         self._running = True
         pygame.time.set_timer(pygame.USEREVENT+1, 1000/FPS)
-        self._level = Level()
+        self._loader = Loader()
+        self._level = self._loader.load("sources/level0.json")
         self._level.on_init()
 
     def on_event(self, event):
