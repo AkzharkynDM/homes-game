@@ -1,9 +1,22 @@
-{
+[
+  {
   "level":{
     "background" : "resources/background.png"
   },
   "player":{
-    "squares": 4,
-    "trianges" : 2
+    "sqrs": 1,
+    "rects": 1,
+    "tris" : 1
+  }
+},
+{
+  "level":{
+    "background" : "resources/homes_pics/dog_house.png"
+  },
+  "player":{
+    "sqrs": 6,
+    "rects": 6,
+    "tris" : 1
   }
 }
+]
