@@ -4,6 +4,7 @@ import pygame
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 FPS = 30
+bg = pygame.image.load("homes_pics/dog_house.png")
 
 class App:
     def __init__(self):
@@ -30,9 +31,9 @@ class App:
 			# elif keys[pygame.K_s]:
 			# 	pygame.mixer.init()
 			# 	pygame.mixer.music.load("/Users/Cutie/Movies/backgroundmusic.mp3")
-	
+
     def on_loop(self):
-        self._display_surf.fill(BLACK)
+        self._display_surf.blit(bg, (0,0))
 
     def on_render(self):
         pygame.display.flip()
@@ -52,4 +53,3 @@ class App:
 if __name__ == "__main__":
 	theApp = App()
 	theApp.on_execute()
-	
