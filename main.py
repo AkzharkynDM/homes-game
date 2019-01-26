@@ -1,4 +1,5 @@
 import pygame
+from src.player import Player
 
 
 BLACK = (0, 0, 0)
@@ -12,18 +13,20 @@ class App:
 
     def on_init(self):
         pygame.init()
-        self.size = self.weight, self.height = 640, 400
-        self._display_surf = pygame.display.set_mode(self.size,pygame.HWSURFACE | pygame.DOUBLEBUF)
+        self.size = self.weight, self.height = 1024, 780
+        self._display_surf = pygame.display.set_mode(self.size,pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.FULLSCREEN)
         self._running = True
+        self._player = Player()
         pygame.time.set_timer(pygame.USEREVENT+1, 1000/FPS)
 
     def on_event(self, event):
-		if event.type == pygame.USEREVENT+1:
+        self._player.on_event(event)
+        if event.type == pygame.USEREVENT+1:
 			self.on_loop()
 			self.on_render()
-		if event.type == pygame.QUIT:
+        if event.type == pygame.QUIT:
 			self._running = False
-		if event.type == pygame.KEYDOWN:
+        if event.type == pygame.KEYDOWN:
 			keys = pygame.key.get_pressed()
 			if keys[pygame.K_ESCAPE]:
 				self._running = False
@@ -32,9 +35,11 @@ class App:
 			# 	pygame.mixer.music.load("/Users/Cutie/Movies/backgroundmusic.mp3")
 	
     def on_loop(self):
-        self._display_surf.fill(BLACK)
+        self._player.on_loop()
 
     def on_render(self):
+        self._display_surf.fill(BLACK)
+        self._player.on_render(self._display_surf)
         pygame.display.flip()
 
     def on_cleanup(self):
