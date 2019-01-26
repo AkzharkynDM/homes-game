@@ -42,14 +42,14 @@ class App:
 
 
     def on_render(self):
-        self._display_surf.fill(BLACK)
-        self._level.on_render(self._display_surf)
+        pass
 
     def on_loop(self):
         self._player.on_loop()
 
     def on_render(self):
         self._display_surf.fill(BLACK)
+        self._level.on_render(self._display_surf)
         self._player.on_render(self._display_surf)
         pygame.display.flip()
 
