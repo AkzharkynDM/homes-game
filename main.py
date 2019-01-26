@@ -17,13 +17,13 @@ class App:
     def on_init(self):
         pygame.init()
         self.size = self.weight, self.height = 1024, 780
-        self._display_surf = pygame.display.set_mode(self.size,pygame.HWSURFACE | pygame.DOUBLEBUF | pygame.FULLSCREEN)
+        self._display_surf = pygame.display.set_mode(self.size,pygame.HWSURFACE | pygame.DOUBLEBUF)
         self._running = True
-        self._player = Player()
         pygame.time.set_timer(pygame.USEREVENT+1, 1000/FPS)
         self._loader = Loader()
-        self._level = self._loader.load("sources/level0.json")
+        self._level, self._player = self._loader.load("resources/level0.json")
         self._level.on_init()
+        self._player.on_init()
 
     def on_event(self, event):
         self._player.on_event(event)

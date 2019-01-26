@@ -1,6 +1,6 @@
 {
   "level":{
-    "background" : "sources/background.png"
+    "background" : "resources/background.png"
   },
   "player":{
     "squares": 4,
