@@ -2,10 +2,10 @@ import pygame
 
 class Level:
     def __init__(self, info):
-        pass
+        self._backgroundImg = pygame.image.load(info["background"])
 
     def on_init(self):
-        self._backgroundImg = pygame.image.load("sources/background.png")
+        pass
 
     def on_render(self, display_surf):
         display_surf.blit(self._backgroundImg, (0,0))
